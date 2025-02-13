@@ -1,0 +1,32 @@
+﻿<Window x:Class="RCSHepler.ConfigWindows.RedisConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RCSHepler" 
+        xmlns:viewmodels="clr-namespace:RCSHepler.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:RedisConfigViewModel}"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        FontFamily="微软雅黑"
+        FontWeight="Bold"
+        Title="配置" Height="180" Width="500">
+    <Border>
+        <StackPanel>
+            <DockPanel HorizontalAlignment="Left" Margin="10">
+                <TextBlock Width="100" FontSize="15" Text="IPEndpoint："/>
+                <TextBox Margin="10,0,0,0" BorderBrush="#FE8E51" Text="{Binding IPEndpoint}" x:Name="enpoint" Width="300"></TextBox>
+            </DockPanel>
+            <DockPanel Margin="10">
+                <TextBlock Width="100" FontSize="15" Text="Password："/>
+                <TextBox Margin="10,0,0,0" BorderBrush="#FE8E51" Text="{Binding Password}" x:Name="password" HorizontalAlignment="Left" Width="300"></TextBox>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Left" Margin="10">
+                <Button Style="{StaticResource button}" Width="100" Content="连接测试" Click="Connect"/>
+                <Button Style="{StaticResource button}" Width="100" Margin="10,0,0,0" Content="重置" Click="Reset"/>
+                <Button Style="{StaticResource button}" Width="100" Margin="10,0,0,0" Content="保存配置" Click="Save"/>
+            </DockPanel>
+        </StackPanel>
+    </Border>
+</Window>

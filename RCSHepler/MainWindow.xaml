@@ -1,0 +1,128 @@
+﻿<Window x:Class="RCSHepler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RCSHepler"
+        WindowStyle="None"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded"
+        ShowInTaskbar="True"
+        mc:Ignorable="d"
+        Icon="Icons\YF.ico"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Title="MainWindow" Height="620" Width="1124">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"></ColumnDefinition>
+            <ColumnDefinition Width="3*"></ColumnDefinition>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="420"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        
+        <Border Grid.RowSpan="3" Background="#F5F5F5"/>
+        
+        <StackPanel Orientation="Horizontal">
+            <Image Source="Icons/YF.ico" Stretch="Uniform" Height="90" Width="150"></Image>
+            <TextBlock Margin="-10,0,0,0" FontWeight="Regular" FontFamily="NSimSun" Foreground="Black" FontSize="22" Text="RCS软件助手" Height="28"/>
+        </StackPanel>
+
+        <ListBox x:Name="menuListBox" 
+                 Width="200" 
+                 Background="Transparent" 
+                 BorderThickness="0" 
+                 Margin="0,20,0,0" 
+                 Grid.Row="1"         
+                 SelectionChanged="MenuListBox_SelectionChanged">
+            <ListBox.Resources>
+                <DataTemplate x:Key="unselected" DataType="local:Data.ModuleMenu">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="40,0,0,0" Height="20" Width="20" Source="{Binding UnselectedIconSource}"/>
+                        <TextBlock FontFamily="MicrosoftYaHei" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="15" Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+
+                <DataTemplate x:Key="selected" DataType="local:Data.ModuleMenu">
+                    <StackPanel Orientation="Horizontal">
+                        <Image Margin="40,0,0,0" Height="20" Width="20" Source="{Binding SelectedIconSource}"/>
+                        <TextBlock FontWeight="Bold" FontFamily="MicrosoftYaHei" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="15" Foreground="White" Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.Resources>
+            
+            <ListBox.ItemContainerStyle>
+                <Style TargetType="ListBoxItem">
+                    <Setter Property="Height" Value="48"/>
+
+                    <Setter Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate TargetType="ListBoxItem">
+                                <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                                    <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                                      TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+
+                    <Setter Property="ContentTemplate" Value="{StaticResource unselected}"/>
+                    
+                    <Style.Triggers>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background">
+                                <Setter.Value>
+                                    <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                                        <GradientStop Color="#FF655A" Offset="0"/>
+                                        <GradientStop Color="#FE8E51" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </Setter.Value>
+                            </Setter>
+
+                            <Setter Property="ContentTemplate" Value="{StaticResource selected}"/>
+                        </Trigger>
+                    </Style.Triggers>
+                    
+                </Style>
+            </ListBox.ItemContainerStyle>
+        </ListBox>
+
+        <StackPanel x:Name="softwareInfo" VerticalAlignment="Bottom" Margin="10,0,0,10" Grid.Row="2" Orientation="Vertical">
+            <DockPanel HorizontalAlignment="Left">
+                <TextBlock Text="当前版本: " FontFamily="MicrosoftYaHei" Grid.Row="2" Foreground="#929EAE" FontSize="12" Height="15"/>
+                <TextBlock Text="{Binding Version}" FontFamily="MicrosoftYaHei" Grid.Row="2" Foreground="#929EAE" FontSize="12" Height="15"/>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Left">
+                <TextBlock Text="授权状态: " FontFamily="MicrosoftYaHei" Grid.Row="2" Foreground="#929EAE" FontSize="12" Height="15"/>
+                <TextBlock Text="{Binding AuthorizationStatus}" FontFamily="MicrosoftYaHei" Grid.Row="2" Foreground="#929EAE" FontSize="12" Height="15"/>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Left">
+                <TextBlock Text="前端地址: " FontFamily="MicrosoftYaHei" Grid.Row="2" Foreground="#929EAE" FontSize="12" Height="15"/>
+                <TextBlock FontFamily="MicrosoftYaHei" Grid.Row="2" Foreground="#929EAE" FontSize="12" Height="15">
+                    <Hyperlink RequestNavigate="NavigateURL" NavigateUri="{Binding Url}">
+                        <TextBlock Text="{Binding Url}"/>
+                    </Hyperlink>
+                </TextBlock>
+            </DockPanel>
+            
+        </StackPanel>
+
+        <StackPanel Margin="0,0,10,0" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Margin="0,-50,10,0" Width="17px" Height="17px" BorderBrush="Transparent" Background="Transparent" Click="Minimize">
+                <Image Source="Icons/Minimization.png"/>
+            </Button>
+            <Button Margin="0,-50,10,0" Width="17px" Height="17px" BorderBrush="Transparent" Background="Transparent" Click="Maximize">
+                <Image Source="Icons/Maximization.png"/>
+            </Button>
+            <Button Click="Close" Margin="0,-50,0,0" Width="20" Height="20" BorderBrush="Transparent" Background="Transparent">
+                <Image Source="Icons/ShutDown.png"/>
+            </Button>
+        </StackPanel>
+        
+        <Frame x:Name="mainFrame" Grid.Row="1" Grid.Column="1" NavigationUIVisibility="Hidden" Margin="50,0,50,0"/>
+    </Grid>
+</Window>

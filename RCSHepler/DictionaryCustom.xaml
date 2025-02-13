@@ -1,0 +1,51 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    
+    <DataTemplate x:Key="unselected" DataType="local:Data.ModuleMenu">
+        <StackPanel Orientation="Horizontal">
+            <Image Margin="40,0,0,0" Height="20" Width="20" Source="{Binding UnselectedIconSource}"/>
+            <TextBlock FontFamily="MicrosoftYaHei" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="15" Text="{Binding Name}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <DataTemplate x:Key="selected" DataType="local:Data.ModuleMenu">
+        <StackPanel Orientation="Horizontal">
+            <Image Margin="40,0,0,0" Height="20" Width="20" Source="{Binding SelectedIconSource}"/>
+            <TextBlock FontFamily="MicrosoftYaHei" Margin="10,0,0,0" VerticalAlignment="Center" FontSize="15" Foreground="White" Text="{Binding Name}"/>
+        </StackPanel>
+    </DataTemplate>
+
+    <Style x:Key="menuListBox" TargetType="ListBoxItem">
+        <Setter Property="Height" Value="48"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListBoxItem">
+                    <Border CornerRadius="10" Background="{TemplateBinding Background}">
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" 
+                                      VerticalAlignment="{TemplateBinding VerticalContentAlignment}" 
+                                      TextBlock.Foreground="{TemplateBinding Foreground}"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+        <Setter Property="ContentTemplate" Value="{StaticResource unselected}"/>
+
+        <Style.Triggers>
+            <Trigger Property="IsSelected" Value="True">
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush EndPoint="1,1" StartPoint="0,0">
+                            <GradientStop Color="#FF655A" Offset="0"/>
+                            <GradientStop Color="#FE8E51" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+
+                <Setter Property="ContentTemplate" Value="{StaticResource selected}"/>
+            </Trigger>
+        </Style.Triggers>
+
+    </Style>
+</ResourceDictionary>

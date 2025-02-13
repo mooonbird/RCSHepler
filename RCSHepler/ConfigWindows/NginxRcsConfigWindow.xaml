@@ -1,0 +1,30 @@
+﻿<Window x:Class="RCSHepler.ConfigWindows.NginxRcsConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RCSHepler.ConfigWindows" 
+        xmlns:viewmodels="clr-namespace:RCSHepler.ViewModels" 
+        d:DataContext="{d:DesignInstance Type=viewmodels:NginxRcsViewModel}"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        FontFamily="微软雅黑"
+        FontWeight="Bold"
+        Title="配置" Height="180" Width="500">
+    <Border>
+        <StackPanel>
+            <DockPanel HorizontalAlignment="Left" Margin="10">
+                <TextBlock Width="150" FontSize="15" Text="Web API后端地址："/>
+                <TextBox Margin="10,0,0,0" BorderBrush="#FE8E51" Text="{Binding BackendAddress}" x:Name="backendAddr" Width="300"></TextBox>
+            </DockPanel>
+            <DockPanel Margin="10">
+                <TextBlock Width="150" FontSize="15" Text="前端端口号："/>
+                <TextBox Margin="10,0,0,0" BorderBrush="#FE8E51" Text="{Binding Port}" x:Name="port" HorizontalAlignment="Left" Width="300"></TextBox>
+            </DockPanel>
+            <DockPanel HorizontalAlignment="Left" Margin="10">
+                <Button Style="{StaticResource button}" Width="100" Margin="0,0,0,0" Content="重置" Click="Reset"/>
+                <Button Style="{StaticResource button}" Width="100" Margin="10,0,0,0" Content="保存修改" Click="Save"/>
+            </DockPanel>
+        </StackPanel>
+    </Border>
+</Window>
